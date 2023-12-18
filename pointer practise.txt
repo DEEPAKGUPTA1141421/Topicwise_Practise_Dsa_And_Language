@@ -1,0 +1,92 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<stdint.h>
+void *createarray(int size,size_t sizeOfType){
+    void*arr1=malloc(size*sizeOfType);
+    if(arr1==NULL){
+        printf("unsuccesfully");
+        return NULL;
+    }
+    return arr1;
+}
+void **create2darray(int r,int c,size_t sizeOfType){
+    void**arr1=malloc(r*sizeof(void*));
+    if(arr1==NULL){
+        printf("unsuccesfully");
+        arr1;
+    }
+    for(int i=0;i<c;i++){
+        arr1[i]=malloc(c*sizeOfType);
+        if(arr1[i]==NULL){
+            printf("unsuccesfully in created space ifor coloum");
+            return arr1;
+        }
+    }
+    return arr1;
+}
+void delete2darray(void**arr,int row){
+    for(int i=0;i<row;i++){
+        free(arr[i]);
+    }
+    free(arr);
+    printf("succesfully deleted array");
+}
+int main()
+{
+    int n=3;
+    int m=4;
+    int**arr1=(int**)create2darray(n,m,sizeof(int));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            arr1[i][j]=i;
+        }
+    }
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            printf("%d ",arr1[i][j]);
+        }
+        printf("\n");
+    }
+    delete2darray((void**)arr1,n);
+    
+    int*arr1=(int*)createarray(5,sizeof(int));
+    for(int i=0;i<5;i++){
+        printf("%d\n",arr1[i]);
+    }
+    free(arr1);
+    char*arr=(char*)createarray(5,sizeof(char));
+    for(int i=0;i<5;i++){
+        arr[i]='a';
+    }
+    for(int i=0;i<5;i++){
+        printf("%c",arr[i]);
+    }
+    void*arr=malloc(5*sizeof(int));
+    
+    ll a=10;
+    printf("%lld is 10 \n",a);
+    int*arr=(int*)malloc(5*sizeof(int));
+    int*arr1=(int*)calloc(5,sizeof(int));
+    for(int i=0;i<5;i++){
+        printf("%d %d\n",arr[i] ,arr1[i]);
+    }
+    if(arr1!=NULL){
+        free(arr1);
+        printf("succesfully alloctaed memeory gets free");
+    }
+    arr=realloc(arr,7*sizeof(int));
+    printf("after");
+    for(int i=0;i<7;i++){
+        printf("%d\n",arr[i]);
+    }
+    return 0;
+}
