@@ -40,6 +40,94 @@ void delete2darray(void**arr,int row){
     free(arr);
     printf("succesfully deleted array");
 }
+
+typedef struct {
+    void** array;   // Array to store elements
+    int capacity;   // Maximum capacity of the stack
+    int size;       // Current size of the stack
+}Stack;
+
+// Function to initialize a stack
+Stack* createStack(size_t capacity) {
+    Stack* stack = (Stack*)malloc(sizeof(Stack));
+    stack->capacity = capacity;
+    stack->array = (void**)malloc(capacity * sizeof(void*));
+    stack->size = 0;
+    return stack;
+}
+
+// Function to check if the stack is empty
+int isEmpty(Stack* stack) {
+    return stack->size == 0;
+}
+
+// Function to check if the stack is full
+int isFull(Stack* stack) {
+    return stack->size == stack->capacity;
+}
+
+// Function to push an element onto the stack
+void push(Stack* stack, void* item) {
+    if (isFull(stack)) {
+        printf("Stack is full but you are special so i created extra space for you\n");
+        return;
+    }
+    stack->array[stack->size++] = item;
+    //printf("successfully added %d\n",(int)stack->array[stack->size-1]);
+}
+
+// Function to pop an element from the stack
+void* pop(Stack* stack) {
+    if (isEmpty(stack)) {
+        printf("Stack underflow\n");
+        return NULL;
+    }
+    return stack->array[--stack->size];
+}
+// Function to get the top element of the stack without popping it
+void* peek(Stack* stack) {
+    if (isEmpty(stack)) {
+        printf("Stack is empty\n");
+        return NULL;
+    }
+    int a=stack->size - 1;
+    return stack->array[a];
+}
+
+// Function to free the memory allocated for the stack
+void destroyStack(Stack* stack) {
+    free(stack->array);
+    free(stack);
+}
+function usestack(){
+Stack* intStack = createStack(5);
+    int a=10;
+    void*ptr=&a;
+    int c=100;
+    void*ptr1=&c;
+    push(intStack, ptr);
+    push(intStack, ptr1);
+    push(intStack, ptr);
+    push(intStack, ptr1);
+    push(intStack, ptr);
+    push(intStack, ptr1);
+    // push(intStack, (void*)&2);
+    // push(intStack, (void*)&3);
+
+    printf("Top of the stack: %d\n", *(int*)peek(intStack));
+    printf("size is %d\n",intStack->size);
+    printf("deleted elemnet is %d\n",*(int*)pop(intStack));
+    printf("size is %d\n",intStack->size);
+    printf("deleted elemnet is %d\n",*(int*)pop(intStack));
+    printf("size is %d\n",intStack->size);
+    if(peek(intStack)==NULL){
+        printf("Can't access element");
+    }
+    else{
+        printf("Top of the stack after pop: %d\n", *(int*)peek(intStack));
+    }
+    destroyStack(intStack);
+}
 int main()
 {
     int n=3;
@@ -88,5 +176,6 @@ int main()
     for(int i=0;i<7;i++){
         printf("%d\n",arr[i]);
     }
+    usestack();
     return 0;
 }
